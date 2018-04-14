@@ -1,0 +1,85 @@
+.LOGON $TD_SERVER/$TD_STR_GMG_BATCH_USER_KMT, $TD_STR_GMG_BATCH_PWD_KMT;
+
+CREATE SET VOLATILE TABLE TEMPPARM, NO LOG AS
+(
+SELECT 
+${FMT_CD} AS FMT_CD
+, '2013-09-30' AS MTH_NO
+)
+WITH DATA
+PRIMARY INDEX(FMT_CD, MTH_NO)
+ON COMMIT PRESERVE ROWS
+;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_threshold_val_${FMT_CD}_${TIMESTAMP}.csv
+
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_threshold_val.sql
+.EXPORT RESET;
+
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_overall_pt_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_overall_pt_val.sql
+.EXPORT RESET;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_null_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_null_val.sql
+.EXPORT RESET;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_missing_proration_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_missing_proration_val.sql
+.EXPORT RESET;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_metrics#_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_metrics#_val.sql
+.EXPORT RESET;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_locn#_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_locn#_val.sql
+.EXPORT RESET;
+
+.EXPORT REPORT FILE=$OUTBOUND/acr_game_qa_force_proration_val_${FMT_CD}_${TIMESTAMP}.csv
+.SET RECORDMODE OFF;
+.QUIET ON;
+.SET TITLEDASHES OFF;
+.SET WIDTH 15000;
+.SET SEPARATOR ',';
+
+.RUN FILE=/di/Projects/acrgame/scripts/qaQA/config/MLY_VAL/acr_game_qa_force_proration_val.sql
+.EXPORT RESET;
